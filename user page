@@ -1,0 +1,119 @@
+package pageObjects;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.List;
+
+public class UsersPage {
+    WebDriver driver;
+    WebDriverWait wait;
+
+    public UsersPage(WebDriver driver) {
+        this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    }
+
+    // Primary and fallback locators
+    private By usersMenuPrimary = By.xpath("//span[text()='Users']/ancestor::a");
+    private By usersMenuFallback = By.xpath("//a[contains(., 'Users') or .//span[text()='Users']]");
+
+    private By createButton = By.xpath("//button[contains(., 'CREATE')]");
+    private By nameInput = By.xpath("//input[@placeholder='Enter Name']");
+    private By emailInput = By.xpath("//input[@placeholder='Enter Email']");
+    private By phoneInput = By.xpath("//input[@placeholder='Enter Phone']");
+    private By roleDropdown = By.xpath("//label[text()='Role']/following-sibling::div//select");
+    private By statusDropdown = By.xpath("//label[text()='Status']/following-sibling::div//select");
+    private By submitButton = By.xpath("//button[contains(., 'Submit')]");
+    private By successToast = By.xpath("//div[contains(@class,'Toastify__toast--success')]");
+    private By searchInput = By.xpath("//input[@placeholder='Search user by name, email, phone']");
+    private By editIcon = By.xpath("(//button[contains(@aria-label,'Edit')])[1]");
+    private By deleteIcon = By.xpath("(//button[contains(@aria-label,'Delete')])[1]");
+    private By confirmDeleteBtn = By.xpath("//button[text()='Yes, delete']");
+    private By applyFilterBtn = By.xpath("//button[text()='Apply Filter']");
+    private By tableRows = By.xpath("//table//tbody/tr");
+
+    // Actions
+    public void clickUsersMenu() {
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(usersMenuPrimary)).click();
+        } catch (Exception e) {
+            System.out.println("Primary locator failed for Users menu, trying fallback...");
+            wait.until(ExpectedConditions.elementToBeClickable(usersMenuFallback)).click();
+        }
+    }
+
+    public void clickCreateButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(createButton)).click();
+    }
+
+    public void enterName(String name) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(nameInput)).sendKeys(name);
+    }
+
+    public void enterEmail(String email) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(emailInput)).sendKeys(email);
+    }
+
+    public void enterPhone(String phone) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(phoneInput)).sendKeys(phone);
+    }
+
+    public void selectRole(String role) {
+        WebElement dropdown = wait.until(ExpectedConditions.visibilityOfElementLocated(roleDropdown));
+        new Select(dropdown).selectByVisibleText(role);
+    }
+
+    public void selectStatus(String status) {
+        WebElement dropdown = wait.until(ExpectedConditions.visibilityOfElementLocated(statusDropdown));
+        new Select(dropdown).selectByVisibleText(status);
+    }
+
+    public void clickSubmit() {
+        wait.until(ExpectedConditions.elementToBeClickable(submitButton)).click();
+    }
+
+    public boolean isUserCreated() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(successToast)).isDisplayed();
+    }
+
+    public void searchUser(String keyword) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(searchInput)).sendKeys(keyword);
+    }
+
+    public void clickEditUser() {
+        wait.until(ExpectedConditions.elementToBeClickable(editIcon)).click();
+    }
+
+    public void clickDeleteUser() {
+        wait.until(ExpectedConditions.elementToBeClickable(deleteIcon)).click();
+    }
+
+    public void confirmDelete() {
+        wait.until(ExpectedConditions.elementToBeClickable(confirmDeleteBtn)).click();
+    }
+
+    public void applyFilter() {
+        wait.until(ExpectedConditions.elementToBeClickable(applyFilterBtn)).click();
+    }
+
+    public int getTableRowCount() {
+        List<WebElement> rows = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(tableRows));
+        return rows.size();
+    }
+
+    public boolean isUserDisplayedInTable(String name) {
+        List<WebElement> rows = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(tableRows));
+        for (WebElement row : rows) {
+            if (row.getText().contains(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
