@@ -1,0 +1,179 @@
+package stepDefinitions;
+
+import io.cucumber.java.en.*;
+import org.openqa.selenium.WebDriver;
+import static org.junit.Assert.*;
+import pageObjects.AgentPage;
+import pageObjects.RolePage;
+import utilities.DriverManager;
+
+public class AgentAndRoleSteps {
+
+    WebDriver driver = DriverManager.getDriver();
+    AgentPage agentPage = new AgentPage(driver);
+    RolePage rolePage = new RolePage(driver);
+
+    // ----------- AGENT MODULE -------------
+
+    @Given("I am on the Agent module")
+    public void i_am_on_the_agent_module() {
+        agentPage.navigateToAgentModule();
+    }
+
+    @When("I click on the Add Agent button")
+    public void i_click_on_add_agent_button() {
+        agentPage.clickAddAgent();
+    }
+
+    @When("I enter valid agent details")
+    public void i_enter_valid_agent_details() {
+        agentPage.fillValidAgentForm();
+    }
+
+    @When("I enter invalid or incomplete agent details")
+    public void i_enter_invalid_agent_details() {
+        agentPage.fillInvalidAgentForm();
+    }
+
+    @When("I click Save Agent")
+    public void i_click_save_agent() {
+        agentPage.clickSave();
+    }
+
+    @Then("I should see the new agent in the list")
+    public void i_should_see_new_agent_in_list() {
+        assertTrue(agentPage.isAgentVisibleInList());
+    }
+
+    @When("I search for an existing agent")
+    public void i_search_for_existing_agent() {
+        agentPage.searchAgent();
+    }
+
+    @When("I click on the agent name")
+    public void i_click_on_agent_name() {
+        agentPage.clickAgentName();
+    }
+
+    @Then("I should see the agent's details")
+    public void i_should_see_agent_details() {
+        assertTrue(agentPage.isAgentDetailsVisible());
+    }
+
+    @When("I click the Edit Agent button")
+    public void i_click_edit_agent_button() {
+        agentPage.clickEditAgent();
+    }
+
+    @When("I update the agent's information")
+    public void i_update_agent_information() {
+        agentPage.updateAgentForm();
+    }
+
+    @Then("the changes should be reflected in the agent list")
+    public void changes_reflected_in_agent_list() {
+        assertTrue(agentPage.isAgentUpdated());
+    }
+
+    @When("I click the Delete Agent button")
+    public void i_click_delete_agent_button() {
+        agentPage.clickDeleteAgent();
+    }
+
+    @When("I confirm the agent deletion")
+    public void i_confirm_agent_deletion() {
+        agentPage.confirmDelete();
+    }
+
+    @Then("the agent should be removed from the list")
+    public void agent_removed_from_list() {
+        assertFalse(agentPage.isAgentVisibleInList());
+    }
+
+    @Then("I should see a validation or error message for agent")
+    public void i_should_see_error_for_agent() {
+        assertTrue(agentPage.isErrorMessageVisible());
+    }
+
+    // ----------- ROLE MODULE -------------
+
+    @Given("I am on the Role module")
+    public void i_am_on_the_role_module() {
+        rolePage.navigateToRoleModule();
+    }
+
+    @When("I click on the Add Role button")
+    public void i_click_on_add_role_button() {
+        rolePage.clickAddRole();
+    }
+
+    @When("I enter valid role details")
+    public void i_enter_valid_role_details() {
+        rolePage.fillValidRoleForm();
+    }
+
+    @When("I enter invalid or incomplete role details")
+    public void i_enter_invalid_role_details() {
+        rolePage.fillInvalidRoleForm();
+    }
+
+    @When("I click Save Role")
+    public void i_click_save_role() {
+        rolePage.clickSave();
+    }
+
+    @Then("I should see the new role in the list")
+    public void i_should_see_new_role_in_list() {
+        assertTrue(rolePage.isRoleVisibleInList());
+    }
+
+    @When("I search for an existing role")
+    public void i_search_for_existing_role() {
+        rolePage.searchRole();
+    }
+
+    @When("I click on the role name")
+    public void i_click_on_role_name() {
+        rolePage.clickRoleName();
+    }
+
+    @Then("I should see the role's details")
+    public void i_should_see_role_details() {
+        assertTrue(rolePage.isRoleDetailsVisible());
+    }
+
+    @When("I click the Edit Role button")
+    public void i_click_edit_role_button() {
+        rolePage.clickEditRole();
+    }
+
+    @When("I update the role information")
+    public void i_update_role_information() {
+        rolePage.updateRoleForm();
+    }
+
+    @Then("the changes should be reflected in the role list")
+    public void changes_reflected_in_role_list() {
+        assertTrue(rolePage.isRoleUpdated());
+    }
+
+    @When("I click the Delete Role button")
+    public void i_click_delete_role_button() {
+        rolePage.clickDeleteRole();
+    }
+
+    @When("I confirm the role deletion")
+    public void i_confirm_role_deletion() {
+        rolePage.confirmDelete();
+    }
+
+    @Then("the role should be removed from the list")
+    public void role_removed_from_list() {
+        assertFalse(rolePage.isRoleVisibleInList());
+    }
+
+    @Then("I should see a validation or error message for role")
+    public void i_should_see_error_for_role() {
+        assertTrue(rolePage.isErrorMessageVisible());
+    }
+}
