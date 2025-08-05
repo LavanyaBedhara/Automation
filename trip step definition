@@ -1,0 +1,25 @@
+package stepDefinitions;
+
+import io.cucumber.java.en.*;
+import pageObjects.TripPage;
+
+public class TripSteps {
+    TripPage tripPage = new TripPage();
+
+    @Given("I am on the Trip module")
+    public void i_am_on_the_trip_module() {
+        tripPage.navigateToTripModule();
+    }
+
+    @When("I create a new trip with valid details")
+    public void i_create_a_new_trip_with_valid_details() {
+        tripPage.clickAddTrip();
+        tripPage.fillTripForm();
+        tripPage.submitTripForm();
+    }
+
+    @Then("The trip should be created successfully")
+    public void the_trip_should_be_created_successfully() {
+        tripPage.verifyTripCreated();
+    }
+}
