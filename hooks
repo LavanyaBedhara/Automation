@@ -1,0 +1,20 @@
+package stepDefinitions;
+
+import io.cucumber.java.AfterAll;
+import io.cucumber.java.BeforeAll;
+import utilities.DriverManager;
+
+public class Hooks {
+
+    @BeforeAll
+    public static void beforeAll() {
+        System.out.println("Launching browser...");
+        DriverManager.getDriver();
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        System.out.println("Closing browser...");
+        DriverManager.quitDriver();
+    }
+}
