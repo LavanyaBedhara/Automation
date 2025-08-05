@@ -1,0 +1,44 @@
+package stepDefinitions;
+
+import io.cucumber.java.en.*;
+import pageObjects.ListViewsPage;
+
+public class ListViewsSteps {
+
+    ListViewsPage listViewsPage = new ListViewsPage();
+
+    @Given("I am on any listing page")
+    public void i_am_on_any_listing_page() {
+        listViewsPage.navigateToListingPage();
+    }
+
+    @Then("I should see the default table headers")
+    public void i_should_see_the_default_table_headers() {
+        listViewsPage.verifyTableHeaders();
+    }
+
+    @Then("I should be able to sort columns")
+    public void i_should_be_able_to_sort_columns() {
+        listViewsPage.verifyColumnSorting();
+    }
+
+    @Then("I should be able to filter data")
+    public void i_should_be_able_to_filter_data() {
+        listViewsPage.verifyDataFiltering();
+    }
+
+    @Then("I should be able to search by keyword")
+    public void i_should_be_able_to_search_by_keyword() {
+        listViewsPage.verifyKeywordSearch();
+    }
+
+    @Then("pagination controls should be present and functional")
+    public void pagination_controls_should_be_present_and_functional() {
+        listViewsPage.verifyPagination();
+    }
+
+    @Then("action buttons like edit or delete should be visible per row")
+    public void action_buttons_like_edit_or_delete_should_be_visible_per_row() {
+        listViewsPage.verifyRowActionButtons();
+    }
+}
