@@ -1,0 +1,25 @@
+package stepDefinitions;
+
+import io.cucumber.java.en.*;
+import pageObjects.StopsPage;
+
+public class StopsSteps {
+    StopsPage stopsPage = new StopsPage();
+
+    @Given("I am on the Stops module")
+    public void i_am_on_the_stops_module() {
+        stopsPage.navigateToStopsModule();
+    }
+
+    @When("I add a new stop with valid data")
+    public void i_add_a_new_stop_with_valid_data() {
+        stopsPage.clickAddStop();
+        stopsPage.fillStopForm();
+        stopsPage.submitStopForm();
+    }
+
+    @Then("The stop should be created successfully")
+    public void the_stop_should_be_created_successfully() {
+        stopsPage.verifyStopCreated();
+    }
+}
