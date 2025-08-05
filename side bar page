@@ -1,0 +1,41 @@
+package pageObjects;
+
+import org.openqa.selenium.*;
+import java.util.List;
+
+public class SidebarPage {
+
+    WebDriver driver;
+
+    public SidebarPage(WebDriver driver) {
+        this.driver = driver;
+    }
+
+    // ✅ Sidebar menu items — Update to match the visible "Dashboard", "Users", etc.
+    public List<WebElement> getSidebarItems() {
+        return driver.findElements(By.xpath("//div[@class='css-g5y9jx']//div[contains(text(),'Dashboard') or contains(text(),'Users') or contains(text(),'Agent') or contains(text(),'City')]"));
+    }
+
+    // ✅ Toggle sidebar (expand/collapse)
+    public void toggleSidebar() {
+        // Try updating this if your UI uses a different icon or button
+    	driver.findElement(By.cssSelector("svg.lucide-menu")).click();
+    }
+
+    // ✅ Check if sidebar is collapsed — update the class based on your DOM
+    public boolean isSidebarCollapsed() {
+        WebElement sidebar = driver.findElement(By.cssSelector(".css-g5y9jx.h-full"));
+        String width = sidebar.getCssValue("width");
+        System.out.println("Sidebar width: " + width); // Debug log
+
+        return width.equals("16px") || width.equals("48px");
+    }
+
+    // ✅ Check if sidebar is expanded — the opposite condition
+    public boolean isSidebarExpanded() {
+        WebElement sidebar = driver.findElement(By.xpath("//div[contains(@class, 'css-g5y9jx')]"));
+        String style = sidebar.getAttribute("style");
+        return !style.contains("width: 0") && !style.contains("display: none");
+    }
+}
+
