@@ -1,0 +1,40 @@
+package stepDefinitions;
+
+import io.cucumber.java.en.*;
+import pageObjects.GeneralUIPage;
+
+public class GeneralUISteps {
+
+    GeneralUIPage generalUIPage = new GeneralUIPage();
+
+    @Given("I am logged into the application")
+    public void i_am_logged_into_the_application() {
+        generalUIPage.loginToApp();
+    }
+
+    @Then("I should see the header and footer present on all pages")
+    public void i_should_see_header_and_footer_present_on_all_pages() {
+        generalUIPage.verifyHeader();
+        generalUIPage.verifyFooter();
+    }
+
+    @Then("the branding should be visible")
+    public void the_branding_should_be_visible() {
+        generalUIPage.verifyBranding();
+    }
+
+    @Then("the theme and layout should be consistent across pages")
+    public void the_theme_and_layout_should_be_consistent_across_pages() {
+        generalUIPage.verifyThemeConsistency();
+    }
+
+    @Then("all important UI buttons should be visible and enabled")
+    public void all_important_ui_buttons_should_be_visible_and_enabled() {
+        generalUIPage.verifyEssentialButtons();
+    }
+
+    @Then("no broken links or images should be present")
+    public void no_broken_links_or_images_should_be_present() {
+        generalUIPage.verifyNoBrokenLinksOrImages();
+    }
+}
