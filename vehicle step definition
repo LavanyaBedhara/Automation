@@ -1,0 +1,25 @@
+package stepDefinitions;
+
+import io.cucumber.java.en.*;
+import pageObjects.VehiclePage;
+
+public class VehicleSteps {
+    VehiclePage vehiclePage = new VehiclePage();
+
+    @Given("I am on the Vehicle module")
+    public void i_am_on_the_vehicle_module() {
+        vehiclePage.navigateToVehicleModule();
+    }
+
+    @When("I add a new vehicle with valid details")
+    public void i_add_new_vehicle_with_valid_details() {
+        vehiclePage.clickAddVehicle();
+        vehiclePage.fillVehicleForm();
+        vehiclePage.submitVehicleForm();
+    }
+
+    @Then("The vehicle should be created successfully")
+    public void the_vehicle_should_be_created_successfully() {
+        vehiclePage.verifyVehicleCreated();
+    }
+}
