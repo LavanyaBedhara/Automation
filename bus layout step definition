@@ -1,0 +1,25 @@
+package stepDefinitions;
+
+import io.cucumber.java.en.*;
+import pageObjects.BusLayoutPage;
+
+public class BusLayoutSteps {
+    BusLayoutPage layoutPage = new BusLayoutPage();
+
+    @Given("I am on the Bus Layout module")
+    public void i_am_on_the_bus_layout_module() {
+        layoutPage.navigateToBusLayoutModule();
+    }
+
+    @When("I configure a valid bus layout")
+    public void i_configure_a_valid_bus_layout() {
+        layoutPage.clickAddLayout();
+        layoutPage.fillLayoutForm();
+        layoutPage.submitLayoutForm();
+    }
+
+    @Then("The bus layout should be saved successfully")
+    public void the_bus_layout_should_be_saved_successfully() {
+        layoutPage.verifyLayoutCreated();
+    }
+}
