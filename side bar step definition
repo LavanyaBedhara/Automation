@@ -1,0 +1,59 @@
+package stepDefinitions;
+
+import io.cucumber.java.en.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.*;
+import org.junit.Assert;
+import pageObjects.SidebarPage;
+import utilities.DriverManager;
+
+import java.time.Duration;
+import java.util.List;
+
+public class SidebarSteps {
+
+    WebDriver driver;
+    SidebarPage sidebarPage;
+
+    @Given("I open the OurBus admin site")
+    public void i_open_the_ourbus_admin_site() {
+        driver = DriverManager.getDriver();
+
+        // Directly open dashboard
+        driver.get("https://admin.dev.ourbus.in/dashboard");
+
+        // Wait for the sidebar to appear (corrected selector)
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.presenceOfElementLocated(
+        	    By.xpath("//div[contains(text(), 'Dashboard')]")
+        	));
+
+        sidebarPage = new SidebarPage(driver);
+    }
+
+    @Then("I should see the sidebar with all menu items")
+    public void i_should_see_the_sidebar_with_all_menu_items() {
+        List<WebElement> menuItems = sidebarPage.getSidebarItems();
+        Assert.assertFalse("Sidebar menu items are not visible", menuItems.isEmpty());
+    }
+
+    @Given("I am logged in")
+    public void i_am_logged_in() {
+        i_open_the_ourbus_admin_site();
+    }
+
+    @When("I click the menu icon")
+    public void i_click_the_menu_icon() {
+        sidebarPage.toggleSidebar();
+    }
+
+    @Then("the sidebar should collapse")
+    public void the_sidebar_should_collapse() {
+        Assert.assertTrue("Sidebar did not collapse as expected", sidebarPage.isSidebarCollapsed());
+    }
+
+    @Then("the sidebar should expand")
+    public void the_sidebar_should_expand() {
+        Assert.assertTrue("Sidebar did not expand as expected", sidebarPage.isSidebarExpanded());
+    }
+}
