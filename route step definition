@@ -1,0 +1,25 @@
+package stepDefinitions;
+
+import io.cucumber.java.en.*;
+import pageObjects.RoutePage;
+
+public class RouteSteps {
+    RoutePage routePage = new RoutePage();
+
+    @Given("I am on the Route module")
+    public void i_am_on_the_route_module() {
+        routePage.navigateToRouteModule();
+    }
+
+    @When("I create a new route with valid stops")
+    public void i_create_a_new_route_with_valid_stops() {
+        routePage.clickAddRoute();
+        routePage.fillRouteForm();
+        routePage.submitRouteForm();
+    }
+
+    @Then("The route should be created successfully")
+    public void the_route_should_be_created_successfully() {
+        routePage.verifyRouteCreated();
+    }
+}
